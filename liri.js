@@ -6,7 +6,7 @@ const moment = require('moment');
 moment().format();
 const Spotify = require('node-spotify-api');
 const keys = require("./keys.js");
-var spotify = new Spotify(keys.spotify);
+const spotify = new Spotify(keys.spotify);
 function begin(){
     inquirer.prompt([
     {
@@ -42,9 +42,9 @@ function begin(){
     {
         type: "input",
         name: "command",
-        message: "Please Enter a valid Command input. Type 'concert-this', 'spotify-this-song', 'movie-this', or 'do-what-it-says', followed by your search query so that I can help you find what you're looking for."
+        message: "Please Enter a valid Command input. Type 'concert-this', 'spotify-this-song', 'movie-this', or 'do-what-it-says', followed by your search query so that I can help you find what you're looking for. Or, type 'exit' to exit the program"
     }
-    ]).then(function(input){
+    ]).then(function readCommand(input){
         var userInput = input.command;
         var inputArray = userInput.split(" ");
         var command = inputArray[0]
@@ -103,6 +103,23 @@ function begin(){
                     }
                 }
             })
+        }else if(command === "do-what-it-says"){
+            fs.readFile("random.txt", "utf8", function(error, data){
+                if (error){
+                    console.log(error);
+                    return getCommand();
+                }else{
+                    var dataArr = data.split(",").join(" ");
+                    readCommand({
+                            command: dataArr
+                        });
+                }
+            });
+        }else if (command === "exit"){
+            return;
+        }else{
+            console.log("Sorry, I don't understand, Please Enter a Valid Command Input");
+            return getCommand();
         }
     }).catch(function(error){
         if(error.response){
@@ -112,15 +129,15 @@ function begin(){
             console.log(error.response.status);
             console.log("---------------Status---------------");
             console.log(error.response.headers);
-            return
+            return getCommand();
         }else if(error.request){
             console.log(error.request);
-            return
+            return getCommand();
         }else{
             console.log("Error", error.message);
         }
         console.log(error.config);
-        return
+        return getCommand();
     });
     });
     });
