@@ -4,9 +4,9 @@ const inquirer = require('inquirer');
 const fs = require("fs");
 const moment = require('moment');
 moment().format();
-const spotifyAPI = require('node-spotify-api');
+const Spotify = require('node-spotify-api');
 const keys = require("./keys.js");
-// var spotify = new Spotify(keys.spotify);
+var spotify = new Spotify(keys.spotify);
 function begin(){
     inquirer.prompt([
     {
@@ -51,13 +51,9 @@ function begin(){
         var searchTerm = inputArray.slice(1).join("+");
         if(command === "movie-this"){
             axios.get("http://www.omdbapi.com/?t=" + searchTerm + "&y=&plot=short&apikey=trilogy").then(function(response){
-                console.log("Title: " + response.data.Title);
-                console.log("Year: " + response.data.Year);
-                console.log("imdb Rating: " + response.data.imdbRating);
-                console.log("Country: " + response.data.Country);
-                console.log("Language: " + response.data.Language);
-                console.log("Plot Summary: " + response.data.Plot);
-                console.log("Actors/Actresses: " + response.data.Actors);
+                console.log("========Movie=Info========")
+                console.log("Title: " + response.data.Title + "\nYear: " + response.data.Year + "\nimdb Rating: " + response.data.imdbRating + "\nCountry: " + response.data.Country + "\nLanguage: " + response.data.Language + "\nPlot Summary: " + response.data.Plot + "\nActors/Actresses: " + response.data.Actors);
+                console.log("==========================");
                 return getCommand();
             });
         }else if(command === "concert-this"){
@@ -66,11 +62,9 @@ function begin(){
                     var events = response.data;
                     if(events.length>0){
                         for(var i=0; i<events.length; i++){
-                            console.log("==========Events==========")
-                            console.log("Name of Venue: " + events[i].venue.name);
-                            console.log("Location: " + events[i].venue.city + ", " + events[i].venue.country);
-                            console.log("Date: " + moment(events[i].venue.datetime).format("MM/DD/YYYY"));
-                            console.log("==========================")
+                            console.log("==========Events==========");
+                            console.log("Name of Venue: " + events[i].venue.name + "\nLocation: " + events[i].venue.city + ", " + events[i].venue.country + "\nDate: " + moment(events[i].venue.datetime).format("MM/DD/YYYY"));
+                            console.log("==========================");
                             return getCommand();
                         }
                     }else{
@@ -80,6 +74,35 @@ function begin(){
                         return getCommand();
                     }
                 });
+        }else if (command === "spotify-this-song"){
+            spotify.search({
+                type: "track",
+                query: searchTerm,
+                limit: 1
+            },function(err, data){
+                if(err){
+                    console.log("Error occurred: " + err);
+                    return getCommand();
+                }else{
+                    var song = data.tracks.items
+                    for(var i=0; i<song.length; i++){
+                        console.log("===========Song===========");
+                        process.stdout.write("Artist(s): ");
+                        var artistsData = song[i].artists;
+                        for(var j=0; j<artistsData.length; j++){
+                            if (artistsData.length>1){
+                                var artistsList = artistsData[j].name;
+                                console.log(artistsList);
+                            }else{
+                                console.log(artistsData[j].name);
+                            }
+                        }
+                        console.log("Song: " + song[i].name + "\nLink: " + song[i].preview_url + "\nAlbum: " + song[i].album.name);
+                        console.log("=========================");
+                        return getCommand();
+                    }
+                }
+            })
         }
     }).catch(function(error){
         if(error.response){
@@ -95,7 +118,6 @@ function begin(){
             return
         }else{
             console.log("Error", error.message);
-            return
         }
         console.log(error.config);
         return
