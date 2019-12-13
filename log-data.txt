@@ -1,0 +1,30 @@
+
+==========Events==========
+Name of Venue: Jiexpo Kemayoran
+Location: Jakarta, Indonesia
+Date: 12/12/2019
+==========================
+
+========Movie=Info========
+Title: Inception
+Year: 2010
+imdb Rating: 8.8
+Country: USA, UK
+Language: English, Japanese, French
+Plot Summary: A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.
+Actors/Actresses: Leonardo DiCaprio, Joseph Gordon-Levitt, Ellen Page, Tom Hardy
+==========================
+
+===========Song===========
+Artist(s): Daft Punk
+Title: Get Lucky
+Link: https://p.scdn.co/mp3-preview/28c1195dcc64c65223ed1f439886d50f4ded7ba6?cid=0cd48eeb236a49458ab32e471074461c
+Album: Random Access Memories
+=========================
+
+===========Song===========
+Artist(s): Backstreet Boys
+Title: I Want It That Way
+Link: https://p.scdn.co/mp3-preview/e72a05dc3f69c891e3390c3ceaa77fad02f6b5f6?cid=0cd48eeb236a49458ab32e471074461c
+Album: The Hits--Chapter One
+=========================
