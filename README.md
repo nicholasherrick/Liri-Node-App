@@ -8,7 +8,7 @@ This application makes use of Node.js to create a command line interface. The us
 
 ## Demo/Code
 
-![Demo](/assets/video.webm)
+![Demo](/assets/demo.gif)
 
 ![Code](/assets/code.png)
 
